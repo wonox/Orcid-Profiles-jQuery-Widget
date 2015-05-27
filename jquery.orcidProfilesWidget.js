@@ -75,6 +75,7 @@ $jq(document).ready(function () {
     function list_person_works(works) {
         var ul = $jq('<ul class="orcid-works">');
         $jq(works).each(function (index, value) {
+            var url = value['url'] != null ? value['url'].value : "";  //
             var title = value['work-title']['title'].value;
             var li = $jq('<li class="orcid-work">');
             var extids = value['work-external-identifiers']['work-external-identifier'];
@@ -84,8 +85,10 @@ $jq(document).ready(function () {
                     href = "http://dx.doi.org/";
                     href += value['work-external-identifier-id'].value;
                 }
+               else {  href = href != "" ? href : url;  }  //
             });
-            if (href != "") {
+           href = extids != "" ? href : url;  // 
+           if (href != "") {
                 var a = $jq('<a class="orcid-work">');
                 a.attr("href", href);
                 a.text(title);
